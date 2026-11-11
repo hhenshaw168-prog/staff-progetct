@@ -1,0 +1,35 @@
+dashboard:
+  size: 54
+  title: '<gradient:#5ee7df:#b490ca><bold>NEXUS</bold></gradient> <dark_gray>/</dark_gray> <white>Staff</white>'
+  items:
+    metrics: {slot: 4, material: CLOCK, custom-model-data: 0, name: '<aqua>Server performance', lore: ['<white>TPS: <tps> | MSPT: <mspt>', '<white>Heap: <ram_used>/<ram_max> MB (<ram_percent>%)', '<white>Loaded chunks: <chunks>']}
+    staff-status: {slot: 49, material: PLAYER_HEAD, custom-model-data: 0, name: '<green>Staff on duty', lore: ['<white>Online: <staff_online>', '<white>Staff mode: <staffmode>', '<white>Vanished: <vanished>']}
+    vanish: {slot: 10, material: GLASS, custom-model-data: 0, action: 'toggle:vanish', name: '<yellow>Toggle vanish', lore: ['<gray>Toggle your staff visibility']}
+    staffmode: {slot: 12, material: CLOCK, custom-model-data: 0, action: 'toggle:staffmode', name: '<green>Staff mode', lore: ['<gray>Enter or exit staff mode']}
+    mutechat: {slot: 14, material: MUSIC_DISC_13, custom-model-data: 0, action: 'toggle:mutechat', name: '<red>Global chat mute', lore: ['<gray>Toggle chat for non-staff players']}
+    freezeall: {slot: 16, material: PACKED_ICE, custom-model-data: 0, action: 'toggle:freezeall', name: '<aqua>Emergency freeze all', lore: ['<gray>Freeze online non-staff players']}
+    reports: {slot: 29, material: BOOK, custom-model-data: 0, action: 'open:reports', name: '<yellow>Active reports', lore: ['<gray>Open the active reports queue']}
+    reports: {slot: 29, material: BOOK, custom-model-data: 0, action: 'open:reports', name: '<yellow>Active reports', lore: ['<gray>Open the active reports queue', '<white>Open: <reports>']}
+    threats: {slot: 31, material: SPECTRAL_ARROW, custom-model-data: 0, action: 'open:threats', name: '<red>Threat monitor', lore: ['<gray>Review anti-cheat threats']}
+    players: {slot: 33, material: PLAYER_HEAD, custom-model-data: 0, action: 'open:players', name: '<aqua>Online players', lore: ['<gray>Browse and manage online players']}
+reports:
+  size: 54
+  title: '<yellow>Active reports</yellow>'
+threats:
+  size: 54
+  title: '<gradient:#ff6b6b:#feca57><bold>THREAT MONITOR</bold></gradient>'
+  player-material: PLAYER_HEAD
+inspect:
+  size: 54
+  title: '<gradient:#5ee7df:#b490ca>Inspect: <player></gradient>'
+  inventory-slot: 10
+  enderchest-slot: 16
+  freeze-slot: 31
+  teleport-slot: 32
+punish:
+  size: 54
+  title: '<red>Punishment: <player></red>'
+  warn-slot: 20
+  mute-slot: 22
+  kick-slot: 24
+  ban-slot: 31

@@ -1,0 +1,30 @@
+storage:
+  type: sqlite
+  sqlite-file: data.db
+  # For MySQL/MariaDB set type: mysql and configure the connection below.
+  host: localhost
+  port: 3306
+  database: nexusstaff
+  username: staff
+  password: change-me
+  pool-size: 4
+staff-mode:
+  flight-speed: 0.2
+  actionbar: '<dark_gray>[<gradient:#5ee7df:#b490ca>STAFF MODE ACTIVE</gradient>]</dark_gray> <gray>|</gray> <white>Vanish: <state_vanish></white> <gray>|</gray> <white>Flight: <flight_speed>x</white> <gray>|</gray> <white>Spectating: <spectating></white>'
+gui:
+  dashboard-title: '<gradient:#5ee7df:#b490ca><bold>NEXUS</bold></gradient> <dark_gray>/</dark_gray> <white>Staff</white>'
+  threats-title: '<gradient:#ff6b6b:#feca57><bold>THREAT MONITOR</bold></gradient>'
+  inspect-title: '<gradient:#5ee7df:#b490ca>Inspect: <player></gradient>'
+  punish-title: '<red>Punishment: <player></red>'
+  rows: 6
+anti-cheat:
+  alerts-enabled: true
+  auto-notify-vl: 50
+  auto-freeze-vl: 0
+  # Event APIs differ by plugin release; no third-party API is linked at compile time.
+discord:
+  enabled: false
+  webhook-url: ''
+network:
+  enabled: false
+  channel: nexusstaff:main

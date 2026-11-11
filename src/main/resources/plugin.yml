@@ -1,0 +1,56 @@
+name: NexusStaffPro
+version: '1.0.0'
+main: com.nexusstaff.pro.NexusStaffPlugin
+api-version: '1.20'
+author: NexusStaff
+description: Staff operations, moderation workflows, and anti-cheat alert routing.
+softdepend: [GrimAC, Vulcan]
+commands:
+  staff:
+    aliases: [modmenu]
+    description: Open the staff dashboard.
+    permission: nexusstaff.dashboard
+  staffmode:
+    aliases: [sm]
+    description: Toggle staff mode.
+    permission: nexusstaff.staff
+  threats:
+    aliases: [acgui]
+    description: View anti-cheat threat data.
+    permission: nexusstaff.alerts
+  inspect:
+    description: Inspect an online player's inventory.
+    permission: nexusstaff.staff
+  punish:
+    description: Open the punishment workflow.
+    permission: nexusstaff.staff
+  staffchat:
+    aliases: [sc]
+    description: Send a staff-only message.
+    permission: nexusstaff.staff
+  mutechat:
+    description: Toggle global chat mute.
+    permission: nexusstaff.admin
+  freezeall:
+    description: Toggle emergency freeze for non-staff players.
+    permission: nexusstaff.freezeall
+  report:
+    description: Report an online player to staff.
+permissions:
+  nexusstaff.admin:
+    default: op
+    children:
+      nexusstaff.staff: true
+      nexusstaff.dashboard: true
+      nexusstaff.alerts: true
+      nexusstaff.freezeall: true
+  nexusstaff.staff:
+    default: op
+    children:
+      nexusstaff.dashboard: true
+  nexusstaff.dashboard:
+    default: op
+  nexusstaff.freezeall:
+    default: op
+  nexusstaff.alerts:
+    default: op

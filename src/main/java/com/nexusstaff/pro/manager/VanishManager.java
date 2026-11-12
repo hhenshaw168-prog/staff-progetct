@@ -17,11 +17,13 @@ public final class VanishManager {
 
     public boolean toggle(Player player) {
         if (vanished.remove(player.getUniqueId())) {
+            plugin.luckPerms().setState(player.getUniqueId(), "vanished", false);
             for (Player online : plugin.getServer().getOnlinePlayers()) online.showPlayer(plugin, player);
             player.setCollidable(collisionState.remove(player.getUniqueId()) && !plugin.staffMode().isEnabled(player));
             return false;
         }
         vanished.add(player.getUniqueId());
+        plugin.luckPerms().setState(player.getUniqueId(), "vanished", true);
         collisionState.put(player.getUniqueId(), player.isCollidable());
         player.setCollidable(false);
         for (Player online : plugin.getServer().getOnlinePlayers()) {
@@ -41,6 +43,7 @@ public final class VanishManager {
     }
 
     public void handleQuit(Player player) {
+        if (vanished.contains(player.getUniqueId())) plugin.luckPerms().setState(player.getUniqueId(), "vanished", false);
         vanished.remove(player.getUniqueId());
         collisionState.remove(player.getUniqueId());
     }

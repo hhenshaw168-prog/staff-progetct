@@ -1,6 +1,6 @@
 dashboard:
   size: 54
-  title: '<gradient:#5ee7df:#b490ca><bold>NEXUS</bold></gradient> <dark_gray>/</dark_gray> <white>Staff</white>'
+  title: '<gradient:#5ee7df:#b490ca><bold>ASTERMC</bold></gradient> <dark_gray>/</dark_gray> <white>Staff</white>'
   items:
     metrics: {slot: 4, material: CLOCK, custom-model-data: 0, name: '<aqua>Server performance', lore: ['<white>TPS: <tps> | MSPT: <mspt>', '<white>Heap: <ram_used>/<ram_max> MB (<ram_percent>%)', '<white>Loaded chunks: <chunks>']}
     staff-status: {slot: 49, material: PLAYER_HEAD, custom-model-data: 0, name: '<green>Staff on duty', lore: ['<white>Online: <staff_online>', '<white>Staff mode: <staffmode>', '<white>Vanished: <vanished>']}

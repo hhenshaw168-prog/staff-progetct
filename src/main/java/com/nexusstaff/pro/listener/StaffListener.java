@@ -41,6 +41,7 @@ public final class StaffListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
+        plugin.altAccounts().remember(event.getPlayer());
         plugin.freeze().handleJoin(event.getPlayer());
         plugin.vanish().handleJoin(event.getPlayer());
         if (plugin.vanish().isVanished(event.getPlayer())) {

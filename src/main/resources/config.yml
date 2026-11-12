@@ -21,10 +21,16 @@ anti-cheat:
   alerts-enabled: true
   auto-notify-vl: 50
   auto-freeze-vl: 0
-  # Event APIs differ by plugin release; no third-party API is linked at compile time.
+  grim-event-class: ''
+  vulcan-event-class: ''
 discord:
   enabled: false
   webhook-url: ''
 network:
   enabled: false
   channel: nexusstaff:main
+  # AsterMC generates this key on first launch. Share it securely across backends.
+  shared-secret: ''
+privacy:
+  # Generated on first launch. Keep this value stable to preserve alt-account matching.
+  ip-hash-secret: ''

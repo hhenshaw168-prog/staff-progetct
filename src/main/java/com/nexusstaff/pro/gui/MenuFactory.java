@@ -47,7 +47,14 @@ public final class MenuFactory {
         PlayerDirectoryHolder holder = new PlayerDirectoryHolder(page, title);
         int slot = 0;
         for (Player target : online.stream().skip((long) page * 45).limit(45).toList()) {
+            var rank = plugin.luckPerms().rank(target.getUniqueId());
+            if (!plugin.luckPerms().isAvailable()) {
+                rank = new com.nexusstaff.pro.manager.LuckPermsManager.RankData(
+                        plugin.vault().primaryGroup(target), plugin.vault().prefix(target), "-");
+            }
+            String prefix = rank.prefix().isBlank() ? "<gray>(none)" : rank.prefix();
                 ItemStack head = playerHead(target, "<yellow>" + target.getName(),
+                    "<gray>Rank: " + prefix + " <dark_gray>[" + rank.group() + ", weight " + rank.weight() + "]",
                     "<gray>Health: <white>" + String.format(java.util.Locale.US, "%.1f", target.getHealth()) + "/" + target.getMaxHealth(),
                     "<gray>Hunger: <white>" + target.getFoodLevel() + "/20",
                     "<gray>Ping: <white>" + target.getPing() + "ms <dark_gray>|</dark_gray> Brand: <white>" + target.getClientBrandName(),
@@ -91,15 +98,25 @@ public final class MenuFactory {
         set(holder, 47, "freeze", Material.PACKED_ICE, "<aqua>Toggle freeze", "<gray>Freeze or unfreeze this player");
         set(holder, 49, "punish", Material.ANVIL, "<red>Punishments", "<gray>Open punishment actions");
         set(holder, 51, "threat", Material.SPECTRAL_ARROW, "<yellow>Threat score", "<gray>VL: " + plugin.antiCheat().threat(target.getUniqueId()));
+        set(holder, 53, "balance", Material.GOLD_INGOT, "<gold>Economy balance", "<gray>Vault: " + String.format(java.util.Locale.US, "%.2f", plugin.vault().balance(target)));
         viewer.openInventory(holder.getInventory());
     }
 
     public void openPunish(Player viewer, Player target) {
         MenuHolder holder = create(MenuType.PUNISH, target.getUniqueId(), "punish", guiConfig.getInt("punish.size", 54), Map.of("player", target.getName()));
-        set(holder, 20, "punish:warn", Material.PAPER, "<yellow>Warn", "<gray>Issue a warning");
-        set(holder, 22, "punish:mute", Material.MUSIC_DISC_13, "<gold>Mute 1 hour", "<gray>Mute chat for one hour");
-        set(holder, 24, "punish:kick", Material.IRON_DOOR, "<red>Kick", "<gray>Remove from the server");
-        set(holder, 31, "punish:ban", Material.BARRIER, "<dark_red>Ban", "<gray>Permanent ban");
+        int slot = 0;
+        for (var category : plugin.punishments().matrix().categories()) {
+            if (slot >= 45) break;
+            ItemStack item = new ItemStack(category.section().equals("chat") ? Material.PAPER : Material.IRON_SWORD);
+            var meta = item.getItemMeta();
+            meta.displayName(plugin.messages().raw("<yellow>" + category.displayName() + "</yellow>", Map.of()));
+            meta.lore(java.util.List.of(plugin.messages().raw("<gray>First offense: <white>"
+                    + category.tiers().get(0) + "</white>", Map.of()),
+                    plugin.messages().raw("<gray>Click to apply escalation", Map.of())));
+            meta.getPersistentDataContainer().set(plugin.actionKey(), PersistentDataType.STRING, "matrix:" + category.id());
+            item.setItemMeta(meta);
+            holder.getInventory().setItem(slot++, item);
+        }
         viewer.openInventory(holder.getInventory());
     }
 

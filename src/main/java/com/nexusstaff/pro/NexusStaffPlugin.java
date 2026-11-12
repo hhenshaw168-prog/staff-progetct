@@ -9,11 +9,15 @@ import com.nexusstaff.pro.manager.ReportManager;
 import com.nexusstaff.pro.gui.listeners.StaffDashboardListener;
 import com.nexusstaff.pro.listener.StaffListener;
 import com.nexusstaff.pro.manager.AntiCheatHooks;
+import com.nexusstaff.pro.manager.AntiCheatEventBridge;
 import com.nexusstaff.pro.manager.ChatControlManager;
 import com.nexusstaff.pro.manager.DiscordWebhookManager;
 import com.nexusstaff.pro.manager.FreezeManager;
 import com.nexusstaff.pro.manager.MessageService;
 import com.nexusstaff.pro.manager.NetworkMessenger;
+import com.nexusstaff.pro.manager.LuckPermsManager;
+import com.nexusstaff.pro.manager.VaultHook;
+import com.nexusstaff.pro.manager.AltAccountManager;
 import com.nexusstaff.pro.manager.PunishmentManager;
 import com.nexusstaff.pro.manager.StaffModeManager;
 import com.nexusstaff.pro.manager.StorageManager;
@@ -32,6 +36,10 @@ public final class NexusStaffPlugin extends JavaPlugin {
     private StaffListener staffListener;
     private DiscordWebhookManager discord;
     private NetworkMessenger network;
+    private LuckPermsManager luckPerms;
+    private VaultHook vault;
+    private AltAccountManager altAccounts;
+    private AntiCheatEventBridge antiCheatBridge;
     private ChatControlManager chatControl;
     private StaffDashboardMenu dashboardMenu;
     private ReportManager reports;
@@ -44,6 +52,9 @@ public final class NexusStaffPlugin extends JavaPlugin {
         saveResource("guis.yml", false);
         saveResource("messages.yml", false);
         messages = new MessageService(this);
+        luckPerms = new LuckPermsManager(this);
+        vault = new VaultHook(this);
+        altAccounts = new AltAccountManager(this);
         actionKey = new NamespacedKey(this, "menu-action");
         storage = new StorageManager(this);
         reports = new ReportManager(this);
@@ -51,6 +62,7 @@ public final class NexusStaffPlugin extends JavaPlugin {
         vanish = new VanishManager(this);
         freeze = new FreezeManager(this);
         antiCheat = new AntiCheatHooks(this);
+        antiCheatBridge = new AntiCheatEventBridge(this);
         punishments = new PunishmentManager(this);
         discord = new DiscordWebhookManager(this);
         network = new NetworkMessenger(this);
@@ -59,7 +71,7 @@ public final class NexusStaffPlugin extends JavaPlugin {
         dashboardMenu = new StaffDashboardMenu(this, guiConfiguration);
 
         StaffCommand command = new StaffCommand(this);
-        for (String name : new String[]{"staff", "staffmode", "threats", "inspect", "punish", "staffchat", "mutechat", "freezeall", "report"}) {
+        for (String name : new String[]{"staff", "staffmode", "threats", "inspect", "punish", "staffchat", "mutechat", "freezeall", "report", "ban", "tempban", "ipban", "tempmute", "mute", "dupeip"}) {
             getCommand(name).setExecutor(command);
             getCommand(name).setTabCompleter(command);
         }
@@ -69,7 +81,8 @@ public final class NexusStaffPlugin extends JavaPlugin {
             new StaffDashboardRefreshTask(this, new DashboardMetrics(this), dashboardMenu), 20L, 20L).getTaskId();
         staffListener = new StaffListener(this);
         getServer().getPluginManager().registerEvents(staffListener, this);
-        getLogger().info("NexusStaff Pro enabled. GrimAC=" + antiCheat.isGrimPresent() + ", Vulcan=" + antiCheat.isVulcanPresent());
+        getLogger().info("AsterMC enabled. LuckPerms=" + luckPerms.isAvailable() + ", VaultPermissions=" + vault.permissionsAvailable()
+            + ", VaultEconomy=" + vault.economyAvailable() + ", GrimAC=" + antiCheat.isGrimPresent() + ", Vulcan=" + antiCheat.isVulcanPresent());
     }
 
     @Override
@@ -89,6 +102,10 @@ public final class NexusStaffPlugin extends JavaPlugin {
     public PunishmentManager punishments() { return punishments; }
     public DiscordWebhookManager discord() { return discord; }
     public NetworkMessenger network() { return network; }
+    public LuckPermsManager luckPerms() { return luckPerms; }
+    public VaultHook vault() { return vault; }
+    public AltAccountManager altAccounts() { return altAccounts; }
+    public AntiCheatEventBridge antiCheatBridge() { return antiCheatBridge; }
     public ChatControlManager chatControl() { return chatControl; }
     public StaffDashboardMenu dashboardMenu() { return dashboardMenu; }
     public ReportManager reports() { return reports; }

@@ -26,6 +26,7 @@ public final class StaffModeManager {
             return false;
         }
         snapshots.put(player.getUniqueId(), Snapshot.capture(player));
+        plugin.luckPerms().setState(player.getUniqueId(), "staffmode", true);
         speeds.put(player.getUniqueId(), 1.0);
         player.getInventory().clear();
         player.getInventory().setArmorContents(new ItemStack[4]);
@@ -65,6 +66,7 @@ public final class StaffModeManager {
 
     public void restore(Player player) {
         Snapshot snapshot = snapshots.remove(player.getUniqueId());
+        plugin.luckPerms().setState(player.getUniqueId(), "staffmode", false);
         speeds.remove(player.getUniqueId());
         if (snapshot == null) return;
         player.setCollidable(snapshot.collidable && !plugin.vanish().isVanished(player));

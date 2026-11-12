@@ -1,10 +1,10 @@
-name: NexusStaffPro
+name: AsterMC
 version: '1.0.0'
 main: com.nexusstaff.pro.NexusStaffPlugin
 api-version: '1.20'
-author: NexusStaff
-description: Staff operations, moderation workflows, and anti-cheat alert routing.
-softdepend: [GrimAC, Vulcan]
+author: AsterMC
+description: AsterMC staff operations, escalation punishments, and anti-cheat alert routing.
+softdepend: [LuckPerms, Vault, GrimAC, Vulcan]
 commands:
   staff:
     aliases: [modmenu]
@@ -22,8 +22,9 @@ commands:
     description: Inspect an online player's inventory.
     permission: nexusstaff.staff
   punish:
-    description: Open the punishment workflow.
-    permission: nexusstaff.staff
+    description: Open punishment categories or apply an escalation matrix category.
+    usage: /punish <player> [category reason]
+    permission: nexusstaff.punish
   staffchat:
     aliases: [sc]
     description: Send a staff-only message.
@@ -36,18 +37,52 @@ commands:
     permission: nexusstaff.freezeall
   report:
     description: Report an online player to staff.
+  ban:
+    description: Apply a category escalation, including bans when selected by the matrix.
+    usage: /ban <player> <category> <reason>
+    permission: nexusstaff.punish
+  tempban:
+    description: Apply a category escalation, including temporary bans when selected by the matrix.
+    usage: /tempban <player> <category> <reason>
+    permission: nexusstaff.punish
+  ipban:
+    description: Apply a category escalation as an IP ban when the matrix selects a ban.
+    usage: /ipban <player> <category> <reason>
+    permission: nexusstaff.ipban
+  tempmute:
+    description: Apply a category escalation, including mutes when selected by the matrix.
+    usage: /tempmute <player> <category> <reason>
+    permission: nexusstaff.punish
+  mute:
+    description: Apply a category escalation, including mutes when selected by the matrix.
+    usage: /mute <player> <category> <reason>
+    permission: nexusstaff.punish
+  dupeip:
+    description: Find accounts with a matching stored network-address digest.
+    usage: /dupeip <online-player>
+    permission: nexusstaff.dupeip
 permissions:
   nexusstaff.admin:
     default: op
     children:
       nexusstaff.staff: true
       nexusstaff.dashboard: true
+      nexusstaff.punish: true
+      nexusstaff.ipban: true
+      nexusstaff.dupeip: true
       nexusstaff.alerts: true
       nexusstaff.freezeall: true
   nexusstaff.staff:
     default: op
     children:
       nexusstaff.dashboard: true
+      nexusstaff.punish: true
+  nexusstaff.punish:
+    default: op
+  nexusstaff.ipban:
+    default: op
+  nexusstaff.dupeip:
+    default: op
   nexusstaff.dashboard:
     default: op
   nexusstaff.freezeall:

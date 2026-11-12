@@ -115,6 +115,18 @@ public final class MenuListener implements Listener {
     private void punish(Player staff, MenuHolder holder, String action) {
         Player target = holder.target() == null ? null : Bukkit.getPlayer(holder.target());
         if (target == null) return;
+        if (action.startsWith("matrix:")) {
+            String categoryId = action.substring("matrix:".length());
+            var category = plugin.punishments().matrix().find(categoryId);
+            if (category == null) return;
+            if (category.key().equals("lying-to-staff") && !staff.hasPermission("nexusstaff.admin")) {
+                plugin.messages().send(staff, "no-permission");
+                return;
+            }
+            plugin.punishments().applyMatrix(staff, target, category, "Staff moderation");
+            staff.closeInventory();
+            return;
+        }
         switch (action) {
             case "punish:warn" -> plugin.punishments().warn(staff, target, "Staff warning");
             case "punish:mute" -> plugin.punishments().mute(staff, target, 3600, "Staff moderation");
